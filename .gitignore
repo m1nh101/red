@@ -1,0 +1,15 @@
+*
+
+!*/
+
+/pico
+
+!*.py
+!*.sh
+!*.asm
+!*.c
+!*.h
+!*.md
+!.gitignore
+!*.bin
+!*.txt
