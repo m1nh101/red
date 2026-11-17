@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ssh -i "/workspaces/binary_exploitation/scripts/key" hacker@dojo.pwn.college

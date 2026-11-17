@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Usage: download.sh [-r] REMOTE_PATH
+#   REMOTE_PATH  remote file (or directory with -r) to download
+#   -r           remote path is a directory (recursive copy)
+#   Files are saved into the current working directory.
+
+set -euo pipefail
+
+KEY="/workspaces/binary_exploitation/scripts/key"   # fixed SSH key path
+HOST="hacker@dojo.pwn.college"                       # fixed remote host
+
+usage() {
+    echo "Usage: $0 [-r] REMOTE_PATH" >&2
+    exit 1
+}
+
+RECURSIVE=""
+REMOTE_PATH=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -r) RECURSIVE="-r" ;;
+        -h|--help) usage ;;
+        -*) echo "Error: unknown option: $1" >&2; usage ;;
+        *)
+            if [[ -n "$REMOTE_PATH" ]]; then
+                echo "Error: only one REMOTE_PATH allowed" >&2
+                usage
+            fi
+            REMOTE_PATH="$1"
+            ;;
+    esac
+    shift
+done
+
+[[ -z "$REMOTE_PATH" ]] && usage
+
+if [[ ! -f "$KEY" ]]; then
+    echo "Error: key file not found: $KEY" >&2
+    exit 1
+fi
+
+scp -i "$KEY" ${RECURSIVE:+-r} "${HOST}:${REMOTE_PATH}" .

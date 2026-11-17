@@ -11,5 +11,11 @@
 !*.h
 !*.md
 !.gitignore
-!*.bin
 !*.txt
+
+!/scripts/*
+/scripts/key
+/scripts/key.pub
+/scripts/.env
+
+/__pycache__
